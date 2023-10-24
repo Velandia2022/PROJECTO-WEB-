@@ -19,12 +19,15 @@ public class Animal {
     private String dataRegistro;
 
     //Relacao e implementacao de relacoamentos
-    @OneToOne(mappedBy = "adotante")
+
+    @OneToOne//Correcao de erro relacao adotante-animal
     private Adotante adotante;
 
     @ManyToMany
     @JoinTable(name = "animal-evento",joinColumns = @JoinColumn(name = "evento_id"))
     private List<Evento> eventos;
+
+
 
     public Animal(int animalID) {
         this.animalID = animalID;
