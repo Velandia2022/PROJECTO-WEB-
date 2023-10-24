@@ -1,17 +1,16 @@
 package com.IFSULDEMINAS.SistemaDeGerenciamiento;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long animalID;
-    private int idade;
+    private int animalID;
+    private int idade; //Troque de variavel Long pra int.
     private String nome;
     private String raça;
     private String descrição;
@@ -19,17 +18,25 @@ public class Animal {
     private String estado;
     private String dataRegistro;
 
-    public Animal(Long animalID) {
-        this.animalID = animalID;
-    }
+    //Relacao e implementacao de relacoamentos
+    @OneToOne(mappedBy = "adotante")
+    private Adotante adotante;
 
-    public Long getAnimalID() {
+    @ManyToMany
+    @JoinTable(name = "animal-evento",joinColumns = @JoinColumn(name = "evento_id"))
+    private List<Evento> eventos;
+
+    public Animal(int animalID) {
+        this.animalID = animalID;
+    }//Ajuste
+
+    public int getAnimalID() {
         return animalID;
     }
 
-    public void setAnimalID(Long animalID) {
+    public void setAnimalID(int animalID) {
         this.animalID = animalID;
-    }
+    }//Ajuste
 
     public String getNome() {
         return nome;

@@ -1,30 +1,43 @@
 package com.IFSULDEMINAS.SistemaDeGerenciamiento;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import ch.qos.logback.core.net.server.Client;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long eventoID;
+
+    //Ajuste
+    private int eventoID;
     private String nome;
     private String data;
     private String endereco;
 
+
+    //Relacao e implementacao de relacoamentos
+    @ManyToMany(mappedBy = "eventos")
+    private List<Animal> animais;
+
+    @ManyToMany(mappedBy = "eventos")
+    private List<Cliente> clientes;
+
+    @ManyToOne
+    private Administrativo administrativo;
     // Constructor
     public Evento() {
         // Constructor vacío necesario para JPA
     }
 
     // Getters y Setters
-    public Long getEventoID() {
+    //Ajuste
+    public int getEventoID() {
         return eventoID;
     }
-
-    public void setEventoID(Long eventoID) {
+    //Ajuste
+    public void setEventoID(int eventoID) {
         this.eventoID = eventoID;
     }
 

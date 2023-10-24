@@ -1,20 +1,24 @@
 package com.IFSULDEMINAS.SistemaDeGerenciamiento;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
 public class Administrativo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    //Ajuste
+    private int id;
     private int senha;
     private String tel;
     private String nome;
     private String correioEletronico;
+
+    //Relacao e implementacao de relacoamentos
+    @OneToMany(mappedBy = "administrativo")
+    private List<Evento> eventos;
 
     // Constructor
     public Administrativo() {
@@ -22,11 +26,12 @@ public class Administrativo {
     }
 
     // Getters y Setters
-    public Long getId() {
+    //Ajuste
+    public int getId() {
         return id;
     }
-
-    public void setId(Long id) {
+    //Ajuste
+    public void setId(int id) {
         this.id = id;
     }
 

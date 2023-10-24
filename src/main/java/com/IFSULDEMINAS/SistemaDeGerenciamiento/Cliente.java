@@ -1,31 +1,40 @@
 package com.IFSULDEMINAS.SistemaDeGerenciamiento;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long clienteID;
+
+    //Ajuste
+    private int clienteID;
     private String nome;
     private String serviço;
     private String correio;
 
+    //Relacao e implementacao de relacoamentos
+    @OneToOne
+    private Adotante adotante;
+
+    @ManyToMany
+    @JoinTable(name = "cliente_evento",joinColumns = @JoinColumn(name ="clientes_id"),inverseJoinColumns = @JoinColumn(name = "evento_id"))
+    private List<Evento> eventos;
     // Constructor
     public Cliente() {
         // Constructor vacío necesario para JPA
     }
 
     // Getters y Setters
-    public Long getClienteID() {
+    //Ajuste
+    public int getClienteID() {
         return clienteID;
     }
-
-    public void setClienteID(Long clienteID) {
+    //Ajuste
+    public void setClienteID(int clienteID) {
         this.clienteID = clienteID;
     }
 

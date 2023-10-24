@@ -1,34 +1,37 @@
 package com.IFSULDEMINAS.SistemaDeGerenciamiento;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 
 @Entity
 public class Adotante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long adoptanteID;
+    //Ajuste
+    private int adoptanteID;
     private String nome;
     private String enderecoResidencia;
     private String correioEletronico;
     private String statusDeAdocao;
     private String tel;
 
+    //Relacao e implementacao de relacoamentos
+    @OneToOne(mappedBy = "adotante")
+    private Animal animal;
     // Constructor
     public Adotante() {
         // Constructor vacío necesario para JPA
     }
 
     // Getters y Setters
-    public Long getAdotanteID() {
+    //Ajuste
+    public int getAdotanteID() {
         return adoptanteID;
     }
 
-    public void setAdotanteID(Long adoptanteID) {
+    //Ajuste
+    public void setAdotanteID(int adoptanteID) {
         this.adoptanteID = adoptanteID;
     }
 
