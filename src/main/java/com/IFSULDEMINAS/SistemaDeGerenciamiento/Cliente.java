@@ -23,9 +23,11 @@ public class Cliente {
     @ManyToMany
     @JoinTable(name = "cliente_evento",joinColumns = @JoinColumn(name ="clientes_id"),inverseJoinColumns = @JoinColumn(name = "evento_id"))
     private List<Evento> eventos;
+
+
     // Constructor
-    public Cliente() {
-        // Constructor vacío necesario para JPA
+    //correccion del constructor para simular datos
+    public Cliente(long l, String maría, String s, String mail) {
     }
 
     // Getters y Setters
