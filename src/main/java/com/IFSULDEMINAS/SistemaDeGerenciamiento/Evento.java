@@ -10,8 +10,8 @@ public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    //Ajuste
-    private int eventoID;
+
+    private long eventoID; //Ajuste variavel long
     private String nome;
     private String data;
     private String endereco;
@@ -32,10 +32,10 @@ public class Evento {
     }
 
     // Getters y Setters
-    //Ajuste
-    public int getEventoID() {
+
+    public long getEventoID() {
         return eventoID;
-    }
+    }   //Ajuste variavel long
     //Ajuste
     public void setEventoID(int eventoID) {
         this.eventoID = eventoID;

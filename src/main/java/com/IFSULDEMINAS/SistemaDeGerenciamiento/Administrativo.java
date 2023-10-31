@@ -9,15 +9,15 @@ import java.util.List;
 public class Administrativo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //Ajuste
-    private int id;
+    //Ajuste long
+    private long id;
     private int senha;
     private String tel;
     private String nome;
     private String correioEletronico;
 
     //Relacao e implementacao de relacoamentos
-    @OneToMany(mappedBy = "administrativo")
+    @OneToMany(mappedBy = "administrativo")//tengo wue agragar el join columns (name ETC.. en todos los que tengan este relacionamiento)
     private List<Evento> eventos;
 
     // Constructor
@@ -27,7 +27,7 @@ public class Administrativo {
 
     // Getters y Setters
     //Ajuste
-    public int getId() {
+    public long getId() {
         return id;
     }
     //Ajuste

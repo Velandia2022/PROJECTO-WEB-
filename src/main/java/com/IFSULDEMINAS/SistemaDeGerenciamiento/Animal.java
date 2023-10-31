@@ -9,8 +9,8 @@ import java.util.List;
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int animalID;
-    private int idade; //Troque de variavel Long pra int.
+    private long animalID;//Troque de variavel int pra long.
+    private long idade; //Troque de variavel int pra long.
     private String nome;
     private String raça;
     private String descrição;
@@ -33,13 +33,13 @@ public class Animal {
         this.animalID = animalID;
     }//Ajuste
 
-    public int getAnimalID() {
+    public long getAnimalID() {
         return animalID;
     }
 
     public void setAnimalID(int animalID) {
         this.animalID = animalID;
-    }//Ajuste
+    }// Ajuste variavel long
 
     public String getNome() {
         return nome;
@@ -49,9 +49,9 @@ public class Animal {
         this.nome = nome;
     }
 
-    public int getIdade() {
+    public long getIdade() {
         return idade;
-    }
+    } // Ajuste variavel long
 
     public void setIdade(int idade) {
         this.idade = idade;

@@ -10,8 +10,8 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    //Ajuste
-    private int clienteID;
+
+    private long clienteID; //Ajuste variavel long
     private String nome;
     private String serviço;
     private String correio;
@@ -31,10 +31,10 @@ public class Cliente {
     }
 
     // Getters y Setters
-    //Ajuste
-    public int getClienteID() {
+
+    public long getClienteID() {
         return clienteID;
-    }
+    }  //Ajuste variavel long
     //Ajuste
     public void setClienteID(int clienteID) {
         this.clienteID = clienteID;

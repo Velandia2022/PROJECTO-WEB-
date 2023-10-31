@@ -8,8 +8,7 @@ import jakarta.persistence.*;
 public class Adotante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //Ajuste
-    private int adoptanteID;
+    private long adoptanteID;//Ajuste long
     private String nome;
     private String enderecoResidencia;
     private String correioEletronico;
@@ -25,8 +24,8 @@ public class Adotante {
     }
 
     // Getters y Setters
-    //Ajuste
-    public int getAdotanteID() {
+    //Ajuste long
+    public long getAdotanteID() {
         return adoptanteID;
     }
 
