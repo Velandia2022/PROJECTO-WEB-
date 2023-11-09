@@ -1,15 +1,31 @@
-package com.IFSULDEMINAS.SistemaDeGerenciamiento;
+package com.IFSULDEMINAS.SistemaDeGerenciamiento.controller;
 
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Cliente;
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.repository.ClienteRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.ArrayList;
 //clase con ejemplos
 @Controller
 public class ClienteController {
+    private ClienteRepository clienterepository;
     @GetMapping("/clientes")
+
+    //Operacao Create
+    @PostMapping // este metodo trata adquiciciones
+    public Cliente save (@RequestBody Cliente evento){
+
+    }
+
+
+
+
+
     public String listarClientes(Model model) {
         // Simula cargar datos de clientes desde una fuente.
         List<Cliente> clientes = obtenerClientesDesdeFuente();

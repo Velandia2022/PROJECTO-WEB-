@@ -1,6 +1,8 @@
-package com.IFSULDEMINAS.SistemaDeGerenciamiento;
+package com.IFSULDEMINAS.SistemaDeGerenciamiento.model;
 
-import ch.qos.logback.core.net.server.Client;
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Administrativo;
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Animal;
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Cliente;
 import jakarta.persistence.*;
 
 import java.util.List;

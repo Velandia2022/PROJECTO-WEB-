@@ -1,4 +1,4 @@
-package com.IFSULDEMINAS.SistemaDeGerenciamiento;
+package com.IFSULDEMINAS.SistemaDeGerenciamiento.model;
 
 import jakarta.persistence.*;
 
@@ -13,7 +13,7 @@ public class Cliente {
 
     private long clienteID; //Ajuste variavel long
     private String nome;
-    private String serviço;
+    private String servico;
     private String correio;
 
     //Relacao e implementacao de relacoamentos
@@ -49,11 +49,11 @@ public class Cliente {
     }
 
     public String getServiço() {
-        return serviço;
-    }
+        return servico;
+    } //ajuste na escrita servico
 
     public void setServiço(String serviço) {
-        this.serviço = serviço;
+        this.servico = servico;
     }
 
     public String getCorreio() {

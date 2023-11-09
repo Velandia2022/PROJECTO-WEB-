@@ -1,4 +1,4 @@
-package com.IFSULDEMINAS.SistemaDeGerenciamiento;
+package com.IFSULDEMINAS.SistemaDeGerenciamiento.model;
 
 import jakarta.persistence.*;
 
