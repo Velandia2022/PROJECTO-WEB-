@@ -22,10 +22,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	//ADD Dependencia Spring bootstarterData
 	implementation 'com.h2database:h2'
+	//implementacion
+	implementation 'org.hibernate:hibernate-core:5.5.6.Final'
 	//ADD Spring Boot Starter Web para controladores de web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//Asegurar la concecion con la Base de datos
+	implementation 'mysql:mysql-connector-java:8.0.23'
 }
 
 tasks.named('test') {

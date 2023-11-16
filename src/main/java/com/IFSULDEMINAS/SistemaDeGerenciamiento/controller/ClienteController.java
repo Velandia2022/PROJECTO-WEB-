@@ -2,6 +2,8 @@ package com.IFSULDEMINAS.SistemaDeGerenciamiento.controller;
 
 import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Cliente;
 import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.repository.ClienteRepository;
+
+import jakarta.persistence.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,11 @@ public class ClienteController {
     @PostMapping // este metodo trata adquiciciones
     public Cliente save (@RequestBody Cliente evento){
 
+        return evento;
     }
+
+    //implementar los ajustes de Update, Delete, Create...
+
 
 
 
