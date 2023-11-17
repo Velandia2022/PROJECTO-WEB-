@@ -20,10 +20,14 @@ public interface ClienteRepository {
     List<Cliente> findByCorreoElectronico(String mail);
 
     // Operación de actualización (Update)
-    static Cliente save(Cliente cliente);
+    static Cliente save(Cliente cliente) {
+        return null;
+    }
 
     // Operación de eliminación (Delete) por ID
-    static void deleteById(Long id);
+    static void deleteById(Long id) {
+
+    }
 
     // Operación de lectura (Read) por ID
     static Cliente findById(Long id) {
