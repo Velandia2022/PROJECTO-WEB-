@@ -4,11 +4,11 @@ import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Cliente;
 import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.repository.ClienteRepository;
 
 import jakarta.persistence.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -16,18 +16,67 @@ import java.util.ArrayList;
 @Controller
 public class ClienteController {
     private ClienteRepository clienterepository;
+
     @GetMapping("/clientes")
 
     //Operacao Create
     @PostMapping // este metodo trata adquiciciones
-    public Cliente save (@RequestBody Cliente evento){
+    public Cliente save(@RequestBody Cliente evento) {
 
         return evento;
     }
 
-    //implementar los ajustes de Update, Delete, Create...
+    // Operacion Create
+    @PostMapping
+    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
+        Cliente clienteCreado = ClienteRepository.createCliente(cliente);
+        return new ResponseEntity<>(clienteCreado, HttpStatus.CREATED);
+    }
 
+    // Operacion Read (Obtener todos los clientes)
+    @GetMapping
+    public ResponseEntity<List<Cliente>> getAllClientes() {
+        List<Cliente> clientes = ClienteRepository.findAll();
+        return new ResponseEntity<>(clientes, HttpStatus.OK);
+    }
 
+    // Operacion Read (Obtener un cliente por ID)
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> getClienteById(@PathVariable Long id) {
+        // Manejar la posibilidad de que el cliente no exista
+        Cliente cliente = ClienteRepository.findById(id).orElse(null);
+
+        if (cliente != null) {
+            return new ResponseEntity<>(cliente, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Operación Update
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
+        // Verificar si el cliente con el ID proporcionado existe
+        if (ClienteRepository.existsById(id)) {
+            cliente.setId(id);
+            Cliente clienteActualizado = ClienteRepository.save(cliente);
+            return new ResponseEntity<>(clienteActualizado, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Operación Delete
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
+        // Verificar si el cliente con el ID proporcionado existe
+        if (ClienteRepository.existsById(id)) {
+            ClienteRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 

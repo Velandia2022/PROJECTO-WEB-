@@ -27,7 +27,7 @@ public class Cliente {
 
     // Constructor
     //correccion del constructor para simular datos
-    public Cliente(long l, String maría, String s, String mail) {
+    public Cliente(long ID, String Nombre, String servico, String mail) {
     }
 
     // Getters y Setters
@@ -62,5 +62,12 @@ public class Cliente {
 
     public void setCorreio(String correio) {
         this.correio = correio;
+    }
+
+    public Cliente orElse(Object o) {
+        return null;
+    }
+
+    public void setId(Long id) {
     }
 }
