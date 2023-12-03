@@ -29,6 +29,7 @@ public class ClienteController {
     // CREATE
     @PostMapping
     public Cliente criarCliente(@RequestBody Cliente cliente) {
+
         return clienteRepository.save(cliente);
     }
 
@@ -53,30 +54,29 @@ public class ClienteController {
     @PutMapping("/{clienteID}")
     public ResponseEntity<Cliente> atualizarCliente(@PathVariable long clienteID, @RequestBody Cliente clienteAtualizado) {
         Optional<Cliente> clienteOptional = clienteRepository.findById(clienteID);
+try{
+    Cliente clienteExistente = clienteOptional.get();
+    clienteExistente.setNome(clienteAtualizado.getNome());
+    clienteExistente.setServiço(clienteAtualizado.getServiço());
+    clienteExistente.setCorreio(clienteAtualizado.getCorreio());
+    return ResponseEntity.ok(clienteRepository.save(clienteExistente));
+}catch (ClienteNotFundException ex){
+    return ResponseEntity.notFound().build();
+}
 
-        if (clienteOptional.isPresent()) {
-            Cliente clienteExistente = clienteOptional.get();
-            clienteExistente.setNome(clienteAtualizado.getNome());
-            clienteExistente.setServiço(clienteAtualizado.getServiço());
-            clienteExistente.setCorreio(clienteAtualizado.getCorreio());
-
-            return ResponseEntity.ok(clienteRepository.save(clienteExistente));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     // DELETE
     @DeleteMapping("/{clienteID}")
     public ResponseEntity<Void> excluirCliente(@PathVariable long clienteID) {
         Optional<Cliente> clienteOptional = clienteRepository.findById(clienteID);
+try {
+    clienteRepository.deleteById(clienteID);
+    return ResponseEntity.noContent().build();
+}catch (ClienteNotFundException ex){
+    return ResponseEntity.notFound().build();
+}
 
-        if (clienteOptional.isPresent()) {
-            clienteRepository.deleteById(clienteID);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
 
