@@ -1,10 +1,9 @@
 package com.IFSULDEMINAS.SistemaDeGerenciamiento.controller;
 
 import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Cliente;
-import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.repository.ClienteRepository;
 
-import jakarta.persistence.*;
-import org.springframework.http.HttpStatus;
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.clienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,69 +11,59 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Optional;
+
 //clase con ejemplos
 @Controller
 public class ClienteController {
-    private ClienteRepository clienterepository;
+    @Autowired
+    private com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.clienteRepository clienteRepository;
 
-    @GetMapping("/clientes")
-
-    //Operacao Create
-    @PostMapping // este metodo trata adquiciciones
-    public Cliente save(@RequestBody Cliente evento) {
-
-        return evento;
-    }
-
-    // Operacion Create
+    // CREATE
     @PostMapping
-    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
-        Cliente clienteCreado = ClienteRepository.createCliente(cliente);
-        return new ResponseEntity<>(clienteCreado, HttpStatus.CREATED);
+    public Cliente criarCliente(@RequestBody Cliente cliente) {
+        return clienteRepository.save(cliente);
     }
 
-    // Operacion Read (Obtener todos los clientes)
+    // READ
     @GetMapping
-    public ResponseEntity<List<Cliente>> getAllClientes() {
-        List<Cliente> clientes = ClienteRepository.findAll();
-        return new ResponseEntity<>(clientes, HttpStatus.OK);
+    public List<Cliente> listarClientes() {
+        return clienteRepository.findAll();
     }
 
-    // Operacion Read (Obtener un cliente por ID)
-    @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getClienteById(@PathVariable Long id) {
-        // Manejar la posibilidad de que el cliente no exista
-        Cliente cliente = ClienteRepository.findById(id).orElse(null);
+    @GetMapping("/{clienteID}")
+    public ResponseEntity<Cliente> buscarClientePorId(@PathVariable long clienteID) {
+        Optional<Cliente> clienteOptional = clienteRepository.findById(clienteID);
+        return clienteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
-        if (cliente != null) {
-            return new ResponseEntity<>(cliente, HttpStatus.OK);
+    // UPDATE
+    @PutMapping("/{clienteID}")
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable long clienteID, @RequestBody Cliente clienteAtualizado) {
+        Optional<Cliente> clienteOptional = clienteRepository.findById(clienteID);
+
+        if (clienteOptional.isPresent()) {
+            Cliente clienteExistente = clienteOptional.get();
+            clienteExistente.setNome(clienteAtualizado.getNome());
+            clienteExistente.setServiço(clienteAtualizado.getServiço());
+            clienteExistente.setCorreio(clienteAtualizado.getCorreio());
+
+            return ResponseEntity.ok(clienteRepository.save(clienteExistente));
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
-    // Operación Update
-    @PutMapping("/{id}")
-    public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
-        // Verificar si el cliente con el ID proporcionado existe
-        if (ClienteRepository.existsById(id)) {
-            cliente.setId(id);
-            Cliente clienteActualizado = ClienteRepository.save(cliente);
-            return new ResponseEntity<>(clienteActualizado, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+    // DELETE
+    @DeleteMapping("/{clienteID}")
+    public ResponseEntity<Void> excluirCliente(@PathVariable long clienteID) {
+        Optional<Cliente> clienteOptional = clienteRepository.findById(clienteID);
 
-    // Operación Delete
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
-        // Verificar si el cliente con el ID proporcionado existe
-        if (ClienteRepository.existsById(id)) {
-            ClienteRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (clienteOptional.isPresent()) {
+            clienteRepository.deleteById(clienteID);
+            return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
