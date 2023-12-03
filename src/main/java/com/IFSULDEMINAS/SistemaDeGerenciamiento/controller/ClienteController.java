@@ -6,6 +6,7 @@ import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Cliente;
 import com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.ClienteRepository;
 import com.IFSULDEMINAS.SistemaDeGerenciamiento.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,45 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
     @Autowired
     private ClienteService clienteService;
+
+    // Obtener todos los clientes
+    @GetMapping
+    public ResponseEntity<List<Cliente>> obtenerTodosLosClientes() {
+        List<Cliente> clientes = clienteService.obtenerTodosLosClientes();
+        return ResponseEntity.ok(clientes);
+    }
+
+
+
+    // Crear un nuevo cliente
+    @PostMapping
+    public ResponseEntity<Cliente> crearCliente( @RequestBody Cliente nuevoCliente) {
+        Cliente clienteCreado = clienteService.crearCliente(nuevoCliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteCreado);
+    }
+
+    // Actualizar un cliente existente
+    @PutMapping("/{clienteID}")
+    public ResponseEntity<Cliente> actualizarCliente(@PathVariable long clienteID, @RequestBody Cliente clienteActualizado) {
+        try {
+            Cliente cliente = clienteService.actualizarCliente(clienteID, clienteActualizado);
+            return ResponseEntity.ok(cliente);
+        } catch (ClienteNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Eliminar un cliente por ID
+    @DeleteMapping("/{clienteID}")
+    public ResponseEntity<Void> eliminarCliente(@PathVariable long clienteID) {
+        try {
+            clienteService.eliminarCliente(clienteID);
+            return ResponseEntity.noContent().build();
+        } catch (ClienteNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 
 

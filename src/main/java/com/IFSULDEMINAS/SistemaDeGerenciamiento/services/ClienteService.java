@@ -17,4 +17,16 @@ public class ClienteService {
     public Cliente buscarClientePorId (long clienteID){
         return clienteRepository.findById(clienteID).orElseThrow(()->new ClienteNotFundException("Cliente no encontrado" + clienteID));
     }
+    public Cliente obtenerTodosLosClientes (){
+return ;
+    }
+    public Cliente actualizarCliente (Long clienteID, long Cliente){
+    return;
+    }
+    public Cliente eliminarCliente (long clienteID){
+return;
+    }
+    
+
+
 }
