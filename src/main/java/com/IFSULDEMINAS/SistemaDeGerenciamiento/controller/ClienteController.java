@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,18 +37,18 @@ public class ClienteController {
 
     // Crear un nuevo cliente
     @PostMapping
-    public ResponseEntity<Cliente> crearCliente( @RequestBody Cliente nuevoCliente) {
+    public ResponseEntity<Cliente> crearCliente(@Validated @RequestBody Cliente nuevoCliente) {
         Cliente clienteCreado = clienteService.crearCliente(nuevoCliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteCreado);
     }
 
     // Actualizar un cliente existente
     @PutMapping("/{clienteID}")
-    public ResponseEntity<Cliente> actualizarCliente(@PathVariable long clienteID, @RequestBody Cliente clienteActualizado) {
+    public ResponseEntity<Cliente> actualizarCliente(@Validated @PathVariable long clienteID, @RequestBody Cliente clienteActualizado) {
         try {
             Cliente cliente = clienteService.actualizarCliente(clienteID, clienteActualizado);
             return ResponseEntity.ok(cliente);
-        } catch (ClienteNotFoundException ex) {
+        } catch (ClienteNotFundException ex) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -58,7 +59,7 @@ public class ClienteController {
         try {
             clienteService.eliminarCliente(clienteID);
             return ResponseEntity.noContent().build();
-        } catch (ClienteNotFoundException ex) {
+        } catch (ClienteNotFundException ex) {
             return ResponseEntity.notFound().build();
         }
     }

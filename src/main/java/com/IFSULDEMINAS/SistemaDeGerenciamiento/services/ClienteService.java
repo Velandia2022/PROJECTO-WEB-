@@ -5,6 +5,7 @@ import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Cliente;
 import com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 @Service
@@ -14,18 +15,40 @@ public class ClienteService {
 
 // Metodos para la logica
 
-    public Cliente buscarClientePorId (long clienteID){
-        return clienteRepository.findById(clienteID).orElseThrow(()->new ClienteNotFundException("Cliente no encontrado" + clienteID));
+    // Obtener todos los clientes
+    public List<Cliente> obtenerTodosLosClientes() {
+        return clienteRepository.findAll();
     }
-    public Cliente obtenerTodosLosClientes (){
-return ;
+    public Cliente buscarClientePorId(long clienteID) {
+        return clienteRepository.findById(clienteID).orElseThrow(() -> new ClienteNotFundException("Cliente no encontrado" + clienteID));
     }
-    public Cliente actualizarCliente (Long clienteID, long Cliente){
-    return;
+
+    // Crear un nuevo cliente
+    public Cliente crearCliente(@Validated Cliente nuevoCliente) {
+        // Aquí puedes agregar lógica de validación u otras operaciones antes de guardar
+        return clienteRepository.save(nuevoCliente);
     }
-    public Cliente eliminarCliente (long clienteID){
-return;
+
+    // Actualizar un cliente existente
+    public Cliente actualizarCliente(long clienteID, @Validated Cliente clienteActualizado) {
+        if (!clienteRepository.existsById(clienteID)) {
+            throw new ClienteNotFundException("Cliente no encontrado con ID: " + clienteID);
+        }
+
+        // Aquí puedes agregar lógica de validación u otras operaciones antes de guardar
+        clienteActualizado.setClienteID(clienteID);
+        return clienteRepository.save(clienteActualizado);
     }
+
+    // Eliminar un cliente por ID
+    public void eliminarCliente(long clienteID) {
+        if (!clienteRepository.existsById(clienteID)) {
+            throw new ClienteNotFundException("Cliente no encontrado con ID: " + clienteID);
+        }
+
+        clienteRepository.deleteById(clienteID);
+    }
+
     
 
 
