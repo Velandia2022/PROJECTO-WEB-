@@ -1,8 +1,10 @@
 package com.IFSULDEMINAS.SistemaDeGerenciamiento.controller;
 
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.exceptions.ClienteNotFundException;
 import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Cliente;
 
-import com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.clienteRepository;
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.ClienteRepository;
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,15 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 //clase con ejemplos
-@Controller
+@RestController
+@RequestMapping("/clientes")
 public class ClienteController {
     @Autowired
-    private com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.clienteRepository clienteRepository;
+    private ClienteRepository clienteRepository;
+    @Autowired
+    private ClienteService clienteService;
+
+
 
     // CREATE
     @PostMapping
@@ -33,8 +40,13 @@ public class ClienteController {
 
     @GetMapping("/{clienteID}")
     public ResponseEntity<Cliente> buscarClientePorId(@PathVariable long clienteID) {
-        Optional<Cliente> clienteOptional = clienteRepository.findById(clienteID);
-        return clienteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        //AGREGACAO Clientenotfundexception
+        try {
+            Optional<Cliente> clienteOptional = clienteRepository.findById(clienteID);
+            return clienteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        }catch (ClienteNotFundException ex){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // UPDATE

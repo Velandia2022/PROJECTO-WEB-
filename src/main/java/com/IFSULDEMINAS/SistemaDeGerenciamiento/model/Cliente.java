@@ -27,16 +27,22 @@ public class Cliente {
 
     // Constructor
     //correccion del constructor para simular datos
-    public Cliente(long ID, String Nombre, String servico, String mail) {
+    public Cliente(long clienteID, String nome, String servico, String correio) {
+        this.clienteID = clienteID;
+        this.nome = nome;
+        this.servico = servico;
+        this.correio = correio;
     }
 
     // Getters y Setters
 
     public long getClienteID() {
+
         return clienteID;
     }  //Ajuste variavel long
     //Ajuste
-    public void setClienteID(int clienteID) {
+    public void setClienteID(long clienteID) {
+
         this.clienteID = clienteID;
     }
 
@@ -49,25 +55,24 @@ public class Cliente {
     }
 
     public String getServiço() {
+
         return servico;
     } //ajuste na escrita servico
 
-    public void setServiço(String serviço) {
+    public void setServiço(String servico) {
+
         this.servico = servico;
     }
 
     public String getCorreio() {
+
         return correio;
     }
 
     public void setCorreio(String correio) {
+
         this.correio = correio;
     }
 
-    public Cliente orElse(Object o) {
-        return null;
-    }
 
-    public void setId(Long id) {
-    }
 }

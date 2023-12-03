@@ -1,20 +1,20 @@
 package com.IFSULDEMINAS.SistemaDeGerenciamiento.services;
 
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.exceptions.ClienteNotFundException;
 import com.IFSULDEMINAS.SistemaDeGerenciamiento.model.Cliente;
+import com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.ClienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ClienteService {
-private com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.clienteRepository clienteRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
+// Metodos para la logica
 
-
-public Cliente save(Cliente cliente){
-    Cliente save = com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.clienteRepository.save(cliente);
-    return save;
+    public Cliente buscarClientePorId (long clienteID){
+        return clienteRepository.findById(clienteID).orElseThrow(()->new ClienteNotFundException("Cliente no encontrado" + clienteID));
+    }
 }
-
-public List<Cliente> list() {
-    return com.IFSULDEMINAS.SistemaDeGerenciamiento.repository.clienteRepository.findAll();
-
-}}
