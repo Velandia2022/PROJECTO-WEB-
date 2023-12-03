@@ -1,37 +1,40 @@
 package com.IFSULDEMINAS.SistemaDeGerenciamiento.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Administrativo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //Ajuste long
     private long id;
     private int senha;
     private String tel;
     private String nome;
     private String correioEletronico;
 
-    //Relacao e implementacao de relacoamentos
-    @OneToMany(mappedBy = "administrativo")//tengo wue agragar el join columns (name ETC.. en todos los que tengan este relacionamiento)
+    @OneToMany(mappedBy = "administrativo")
     private List<Evento> eventos;
 
-    // Constructor
     public Administrativo() {
         // Constructor vacío necesario para JPA
     }
 
-    // Getters y Setters
-    //Ajuste
     public long getId() {
         return id;
     }
-    //Ajuste
-    public void setId(int id) {
+
+    public void setId(long id) {
         this.id = id;
     }
 
